@@ -25,8 +25,13 @@ fn main() {
 
     let output: u32 = receipt.journal.decode().unwrap();
 
+    let proof = receipt.inner.groth16().unwrap();
+
     println!(
         "A proof of guest execution! {} is a public output from journal ",
         output
     );
+
+    let proof_hex = hex::encode(&proof.seal);
+    println!("Proof: {}", proof_hex);
 }

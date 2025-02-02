@@ -1965,6 +1965,7 @@ name = "prover"
 version = "0.1.0"
 dependencies = [
  "env_logger",
+ "hex",
  "risc0-zkvm",
 ]
 

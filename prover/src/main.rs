@@ -3,6 +3,8 @@ use std::env;
 use risc0_zkvm::{default_prover, ExecutorEnv, ProverOpts};
 
 fn main() {
+    env_logger::init();
+
     let guest_elf_path = env::var("GUEST_ELF").expect("GUEST_ELF must be set");
 
     let guest_elf = std::fs::read(guest_elf_path).expect("Failed to read guest ELF");
@@ -22,7 +24,6 @@ fn main() {
         .receipt;
 
     let output: u32 = receipt.journal.decode().unwrap();
-    // let proof = receipt
 
     println!(
         "A proof of guest execution! {} is a public output from journal ",

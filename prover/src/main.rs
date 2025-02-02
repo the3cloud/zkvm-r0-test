@@ -1,6 +1,6 @@
 use std::env;
 
-use risc0_zkvm::{default_prover, ExecutorEnv};
+use risc0_zkvm::{default_prover, ExecutorEnv, ProverOpts};
 
 fn main() {
     let guest_elf_path = env::var("GUEST_ELF").expect("GUEST_ELF must be set");
@@ -16,9 +16,13 @@ fn main() {
 
     let prover = default_prover();
 
-    let receipt = prover.prove(env, &guest_elf).unwrap().receipt;
+    let receipt = prover
+        .prove_with_opts(env, &guest_elf, &ProverOpts::groth16())
+        .unwrap()
+        .receipt;
 
     let output: u32 = receipt.journal.decode().unwrap();
+    // let proof = receipt
 
     println!(
         "A proof of guest execution! {} is a public output from journal ",
